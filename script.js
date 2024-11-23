@@ -9,7 +9,7 @@ async function loadCards() {
         // Loop melalui setiap guru dan buat card
         data.forEach((guru, index) => {
             cardContainer.innerHTML += `
-            <div class="bg-white shadow-md rounded-[10px] p-4 card flex flex-col items-center text-center">
+            <div class="bg-white shadow-md rounded-[10px] p-4 card flex flex-col items-center text-center" data-aos="fade-up" data-aos-duration="1000">
               <img src="${guru.foto}" alt="Foto Guru" class="w-full h-40 object-cover rounded-t-[10px]" />
               <h2 class="text-lg font-semibold mb-4 mt-2">${guru.nama}</h2>
               <div class="flex items-center w-full mb-2">
@@ -33,6 +33,8 @@ async function loadCards() {
     } catch (error) {
         console.error("Gagal memuat data:", error);
     }
+    // Pastikan AOS baru diterapkan setelah konten dimuat
+    AOS.refresh();  // Memastikan animasi diapply setelah konten baru dimuat
 }
 
 // Fungsi untuk menyalin teks ke clipboard

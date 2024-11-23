@@ -11,6 +11,7 @@
 
   <link rel="icon" href="https://raw.githubusercontent.com/BayuKartawan/rdm/refs/heads/main/logordm.png" type="image/x-icon" />
   <link href="https://raw.githubusercontent.com/BayuKartawan/rdm/refs/heads/main/logordm.png" rel="apple-touch-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <!-- Include Google Font Chakra Petch -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -55,6 +56,9 @@
     <img src="https://raw.githubusercontent.com/BayuKartawan/rdm/main/GIF%20RDM.gif" class="h-16 w-16 rounded-full" />
   </a>
 
+  <div id="disqus_thread" class="max-w-7xl mx-auto w-full mt-10 p-2"></div>
+
+
   <!-- Footer -->
   <footer class="w-full bg-green-800 text-white py-4">
     <div class="container mx-auto text-center">
@@ -66,7 +70,31 @@
       </p>
     </div>
   </footer>
+
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://penyenggir.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+
   <script src="script.js"></script>
+  <!-- Tambahkan JS AOS di bawah konten -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+      AOS.init();  // Inisialisasi AOS
+  </script>
 </body>
 
 </html>
