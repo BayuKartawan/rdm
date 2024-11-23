@@ -1,84 +1,39 @@
 // Fungsi untuk memuat data JSON dan menampilkan di HTML
-let currentDataHash = null;
-
-// Fungsi untuk mengambil file JSON dan mengembalikan hash
-async function fetchData() {
+async function loadCards() {
     try {
-        const response = await fetch("https://raw.githubusercontent.com/BayuKartawan/rdm/main/data.json");
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch("https://raw.githubusercontent.com/BayuKartawan/rdm/main/data.json"); // Ambil file JSON
+        const data = await response.json(); // Konversi ke JSON
+        const cardContainer = document.getElementById("accountCards");
+        cardContainer.innerHTML = ""; // Kosongkan kontainer sebelum render
 
-        const data = await response.json();
-        const newDataHash = hashData(JSON.stringify(data));
-
-        // Jika hash data berubah, tampilkan notifikasi SweetAlert2
-        if (newDataHash !== currentDataHash) {
-            currentDataHash = newDataHash;
-            showNotification(); // Tampilkan SweetAlert jika data berubah
-        }
-
-        return data;
-
+        // Loop melalui setiap guru dan buat card
+        data.forEach((guru, index) => {
+            cardContainer.innerHTML += `
+            <div class="bg-white shadow-md rounded-[10px] p-4 card flex flex-col items-center text-center">
+              <img src="${guru.foto}" alt="Foto Guru" class="w-full h-40 object-cover rounded-t-[10px]" />
+              <h2 class="text-lg font-semibold mb-4 mt-2">${guru.nama}</h2>
+              <div class="flex items-center w-full mb-2">
+                <span class="font-semibold mr-2">Username:</span>
+                <p id="username${index}" class="text-gray-600 flex-grow">${guru.username}</p>
+                <button class="bg-green-500 text-white px-2 py-1 text-sm rounded hover:bg-green-600"
+                  onclick="copyToClipboard('username${index}')">
+                  Copy
+                </button>
+              </div>
+              <div class="flex items-center w-full mt-2">
+                <span class="font-semibold mr-2">Password:</span>
+                <p id="password${index}" class="text-gray-600 flex-grow">${guru.password}</p>
+                <button class="bg-green-500 text-white px-2 py-1 text-sm rounded hover:bg-green-600"
+                  onclick="copyToClipboard('password${index}')">
+                  Copy
+                </button>
+              </div>
+            </div>`;
+        });
     } catch (error) {
         console.error("Gagal memuat data:", error);
     }
 }
-
-// Fungsi untuk menghitung hash data (untuk membandingkan data yang diperbarui)
-function hashData(data) {
-    let hash = 0;
-    for (let i = 0; i < data.length; i++) {
-        hash = (hash << 5) - hash + data.charCodeAt(i);
-        hash = hash & hash; // Mengatasi overflow
-    }
-    return hash;
-}
-
-// Fungsi untuk menampilkan notifikasi menggunakan SweetAlert2
-function showNotification() {
-    Swal.fire({
-        title: 'Data Telah Diperbarui!',
-        text: 'Klik tombol untuk memuat ulang data.',
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonText: 'Refresh Data',
-        cancelButtonText: 'Tutup'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            refreshData(); // Refresh data jika tombol "Refresh Data" ditekan
-        }
-    });
-}
-
-// Fungsi untuk memuat ulang data
-function refreshData() {
-    loadCards(); // Memuat data terbaru
-}
-
-// Fungsi untuk memuat data dan menampilkan kartu
-async function loadCards() {
-    const data = await fetchData();
-    const cardContainer = document.getElementById("accountCards");
-    cardContainer.innerHTML = ""; // Kosongkan kontainer sebelum menambahkan kartu baru
-
-    if (data) {
-        data.forEach((guru, index) => {
-            cardContainer.innerHTML += `
-                <div class="card">
-                    <h2>${guru.nama}</h2>
-                    <p>Username: ${guru.username}</p>
-                    <p>Password: ${guru.password}</p>
-                    <img src="${guru.foto}" alt="Foto Guru" />
-                </div>
-            `;
-        });
-    }
-}
-
-// Memuat data saat halaman pertama kali dimuat
-window.onload = loadCards;
-
 
 // Fungsi untuk menyalin teks ke clipboard
 function copyToClipboard(id) {
