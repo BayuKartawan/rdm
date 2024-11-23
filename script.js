@@ -1,7 +1,7 @@
 // Fungsi untuk memuat data JSON dan menampilkan di HTML
 async function loadCards() {
     try {
-        const response = await fetch("https://raw.githubusercontent.com/BayuKartawan/rdm/main/data.json"); // Ambil file JSON
+        const response = await fetch("data.json"); // Ambil file JSON
         const data = await response.json(); // Konversi ke JSON
         const cardContainer = document.getElementById("accountCards");
         cardContainer.innerHTML = ""; // Kosongkan kontainer sebelum render
